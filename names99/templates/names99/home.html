@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn the 99 Names of Allah</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .progress {
+            height: 20px;
+            background-color: #28a745;
+            border-radius: 5px;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <h1>Learn the 99 Names of Allah</h1>
+    <p>Welcome! Choose how many names you'd like to learn each day, and start your journey to understanding Allah’s beautiful names. You can choose between learning 2, 3, or 4 names daily.</p>
+
+    <form method="POST" action="{% url 'process_learning' %}">
+        {% csrf_token %}
+        <label>How many names would you like to learn today?</label><br>
+        <input type="radio" id="2" name="names_per_day" value="2">
+        <label for="2">2 Names</label><br>
+        <input type="radio" id="3" name="names_per_day" value="3">
+        <label for="3">3 Names</label><br>
+        <input type="radio" id="4" name="names_per_day" value="4">
+        <label for="4">4 Names</label><br>
+        <button type="submit">Start Learning</button>
+    </form>
+
+    <div class="progress-bar">
+        <div class="progress" style="width: {{ progress_percentage }}%;"></div>
+    </div>
+
+    <footer>
+        <p>You have learned {{ learned_names }} of 99 names so far.</p>
+    </footer>
+</body>
+</html>

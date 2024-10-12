@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--uc#g$u&92qszmg+t+w-e@3pdb77wn6wpuhgm16v5q#)$j$$m9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['namesofallah-e548f12d4886.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['8000-bryaro-namesofallah-5ph2hw1u2or.ws-eu116.gitpod.io', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #other apps
     'reminders',
+    'names99'
 ]
 
 MIDDLEWARE = [
@@ -57,8 +58,8 @@ ROOT_URLCONF = 'names99.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [],  # Leave this empty if you're using app-level templates
+        'APP_DIRS': True,  # This ensures Django looks for templates inside app folders
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -69,6 +70,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'names99.wsgi.application'
 

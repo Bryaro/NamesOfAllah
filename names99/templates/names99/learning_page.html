@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Names</title>
+</head>
+<body>
+    <h1>Names of Allah</h1>
+    <p>Today you chose to learn {{ names_per_day }} names of Allah:</p>
+    <ul>
+        {% if names_per_day == '2' %}
+            <li>Ar-Rahman (The Beneficent)</li>
+            <li>Ar-Rahim (The Merciful)</li>
+        {% elif names_per_day == '3' %}
+            <li>Ar-Rahman (The Beneficent)</li>
+            <li>Ar-Rahim (The Merciful)</li>
+            <li>Al-Malik (The King)</li>
+        {% elif names_per_day == '4' %}
+            <li>Ar-Rahman (The Beneficent)</li>
+            <li>Ar-Rahim (The Merciful)</li>
+            <li>Al-Malik (The King)</li>
+            <li>Al-Quddus (The Holy)</li>
+        {% endif %}
+    </ul>
+    <p>Keep learning and growing your knowledge!</p>
+</body>
+</html>
