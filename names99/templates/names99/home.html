@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learn the 99 Names of Allah</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,27 +63,39 @@
     </style>
 </head>
 <body>
-    <h1>Learn the 99 Names of Allah</h1>
-    <p>Welcome! Choose how many names you'd like to learn each day, and start your journey to understanding Allah’s beautiful names. You can choose between learning 2, 3, or 4 names daily.</p>
+    <div class="container">
+        {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+        {% endif %}
+        
+        <h1 class="text-center">Learn the 99 Names of Allah</h1>
+        <p class="text-center">Choose how many names you'd like to learn each day.</p>
 
-    <form method="POST" action="{% url 'process_learning' %}">
-        {% csrf_token %}
-        <label>How many names would you like to learn today?</label><br>
-        <input type="radio" id="2" name="names_per_day" value="2">
-        <label for="2">2 Names</label><br>
-        <input type="radio" id="3" name="names_per_day" value="3">
-        <label for="3">3 Names</label><br>
-        <input type="radio" id="4" name="names_per_day" value="4">
-        <label for="4">4 Names</label><br>
-        <button type="submit">Start Learning</button>
-    </form>
-
-    <div class="progress-bar">
-        <div class="progress" style="width: {{ progress_percentage }}%;"></div>
+        <form method="POST" action="{% url 'process_learning' %}" class="text-center">
+            {% csrf_token %}
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="2" name="names_per_day" value="2" {% if learned_names == 2 %}checked{% endif %}>
+                <label class="form-check-label" for="2">2 Names</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="3" name="names_per_day" value="3" {% if learned_names == 3 %}checked{% endif %}>
+                <label class="form-check-label" for="3">3 Names</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" id="4" name="names_per_day" value="4" {% if learned_names == 4 %}checked{% endif %}>
+                <label class="form-check-label" for="4">4 Names</label>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">Start Learning</button>
+        </form>
+        
+        <!-- Reset Button -->
+        <form method="POST" action="{% url 'reset_learning' %}" class="text-center mt-3">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Reset Learning</button>
+        </form>
+        
     </div>
-
-    <footer>
-        <p>You have learned {{ learned_names }} of 99 names so far.</p>
-    </footer>
 </body>
 </html>
