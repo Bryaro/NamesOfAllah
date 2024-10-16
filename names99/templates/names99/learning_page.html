@@ -42,20 +42,23 @@
 <body>
     <div class="container">
         <h1 class="text-center">Your Progress</h1>
-        <p>You have learned {{ learned_names }} of 99 names so far.</p>
+        <p>You have learned <span id="learnedCount">0</span> of 99 names so far.</p>
+
+        <!-- Home Menu Link -->
+        <div class="text-center mb-3">
+            <a href="{% url 'home' %}" class="btn btn-primary">Go to Home</a>
+        </div>
 
         <h3>Today's Names of Allah</h3>
-        <ul class="list-group">
+        <ul class="list-group" id="namesList">
             {% for name in names %}
                 <li class="list-group-item">
-                    <input type="checkbox" name="read_names" value="{{ name.id }}" 
-                        {% if name.id in read_names %}checked{% endif %}> {{ name.name }} - {{ name.meaning }}
+                    {{ name.name }} - {{ name.meaning }}
                     <button class="btn btn-info btn-sm float-right" onclick="showMeaning('{{ name.name }}', '{{ name.full_meaning|escapejs }}')">Read Full Meaning</button>
                 </li>
             {% endfor %}
         </ul>
         
-
         <!-- Overlay for the modal -->
         <div class="overlay" id="overlay" onclick="closePopup()"></div>
 
@@ -70,6 +73,12 @@
     </div>
 
     <script>
+        let learnedNames = JSON.parse(localStorage.getItem('learnedNames')) || [];
+
+        function updateLearnedCount() {
+            document.getElementById('learnedCount').innerText = learnedNames.length;
+        }
+
         function showMeaning(name, meaning) {
             document.getElementById('popupTitle').innerText = name;
             document.getElementById('popupContent').innerText = meaning;
@@ -84,12 +93,21 @@
         }
 
         function submitMarkAsLearned() {
+            const name = document.getElementById('popupTitle').innerText; // Get the name from the popup title
             if (document.getElementById('markAsLearned').checked) {
-                // Here you would typically send the mark-as-read request to the server
-                // For example, using AJAX or a form submission
-                alert('Marked as learned!'); // Replace with actual submission logic
+                if (!learnedNames.includes(name)) {
+                    learnedNames.push(name);
+                    localStorage.setItem('learnedNames', JSON.stringify(learnedNames));
+                }
+                alert(name + ' marked as learned!'); // Confirmation message
             }
+            updateLearnedCount(); // Update the learned names count
             closePopup(); // Close the modal after submission
+        }
+
+        // Update learned count on page load
+        window.onload = function() {
+            updateLearnedCount();
         }
     </script>
 </body>

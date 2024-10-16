@@ -44,21 +44,11 @@
         button:hover {
             background-color: #218838;
         }
-        .progress-bar {
-            width: 100%;
-            background-color: #e0e0e0;
-            border-radius: 5px;
+        .learned-names {
             margin-top: 20px;
-        }
-        .progress {
-            height: 20px;
-            background-color: #28a745;
-            border-radius: 5px;
-        }
-        footer {
-            margin-top: 20px;
-            text-align: center;
-            color: #999;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #e9ffe9;
         }
     </style>
 </head>
@@ -91,11 +81,38 @@
         </form>
         
         <!-- Reset Button -->
-        <form method="POST" action="{% url 'reset_learning' %}" class="text-center mt-3">
-            {% csrf_token %}
+        <form method="POST" action="#" class="text-center mt-3" onsubmit="resetLearning(event)">
             <button type="submit" class="btn btn-danger">Reset Learning</button>
         </form>
-        
+
+        <h2>Learned Names</h2>
+        <div id="learnedNames" class="learned-names"></div>
     </div>
+
+    <script>
+        function displayLearnedNames() {
+            const learnedNamesDiv = document.getElementById('learnedNames');
+            learnedNamesDiv.innerHTML = ''; // Clear current list
+            let learnedNames = JSON.parse(localStorage.getItem('learnedNames')) || [];
+            if (learnedNames.length === 0) {
+                learnedNamesDiv.innerHTML = 'No names learned yet.';
+            } else {
+                learnedNames.forEach(name => {
+                    learnedNamesDiv.innerHTML += `<p>${name}</p>`;
+                });
+            }
+        }
+
+        function resetLearning(event) {
+            event.preventDefault(); // Prevent form submission
+            localStorage.removeItem('learnedNames'); // Clear learned names from Local Storage
+            displayLearnedNames(); // Update the learned names section
+        }
+
+        // Display learned names on page load
+        window.onload = function() {
+            displayLearnedNames();
+        }
+    </script>
 </body>
 </html>
